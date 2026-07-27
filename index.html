@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MC_Hinterhalt | Official</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",Arial,sans-serif;
+}
+
+
+body{
+
+    background:#000;
+    color:white;
+    overflow:hidden;
+
+}
+
+
+/* BACKGROUND */
+
+.background{
+
+    width:100%;
+    height:100vh;
+
+
+    background:
+
+    linear-gradient(
+    rgba(0,0,0,.65),
+    rgba(0,0,0,.85)
+    ),
+
+
+    url("https://images.pushsquare.com/2b652d169e6e9/large.jpg");
+
+
+    background-size:cover;
+    background-position:center;
+
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+
+
+/* LIGHT EFFECT */
+
+.background::before{
+
+content:"";
+
+position:absolute;
+
+width:600px;
+height:600px;
+
+
+background:#3d3d3d;
+
+
+filter:blur(180px);
+
+
+opacity:.25;
+
+
+animation:move 8s infinite alternate;
+
+}
+
+
+
+@keyframes move{
+
+from{
+
+transform:translate(-200px,-100px);
+
+}
+
+to{
+
+transform:translate(250px,150px);
+
+}
+
+}
+
+
+
+
+
+/* MAIN */
+
+.container{
+
+
+width:420px;
+
+
+background:
+
+rgba(0,0,0,.65);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.15);
+
+
+
+backdrop-filter:blur(15px);
+
+
+
+border-radius:25px;
+
+
+
+padding:35px;
+
+
+
+text-align:center;
+
+
+
+box-shadow:
+
+
+0 0 50px rgba(58,58,58,.25);
+
+
+
+animation:show 1s ease;
+
+
+}
+
+
+
+
+@keyframes show{
+
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+
+}
+
+
+
+
+
+/* TITLE */
+
+
+.logo-text{
+
+
+margin-bottom:20px;
+
+
+}
+
+
+
+.logo-text h1{
+
+
+font-size:32px;
+
+
+letter-spacing:4px;
+
+
+color:white;
+
+
+
+text-shadow:
+
+
+0 0 15px rgba(255,255,255,.4);
+
+
+}
+
+
+
+.logo-text span{
+
+
+color:#cacaca;
+
+
+font-size:13px;
+
+
+letter-spacing:5px;
+
+
+}
+
+
+
+
+
+
+/* IDENTITY PANEL */
+
+
+.identity{
+
+
+margin-top:25px;
+
+margin-bottom:30px;
+
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+
+}
+
+
+
+.identity div{
+
+
+background:
+
+rgba(255,255,255,.05);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.15);
+
+
+
+border-radius:12px;
+
+
+
+padding:12px;
+
+
+
+width:160px;
+
+
+
+font-size:12px;
+
+
+
+color:#aaa;
+
+
+
+}
+
+
+
+.identity b{
+
+
+color:white;
+
+
+font-size:11px;
+
+
+letter-spacing:2px;
+
+
+}
+
+
+
+
+
+
+
+/* BUTTONS */
+
+
+.btn{
+
+
+width:100%;
+
+
+padding:15px;
+
+
+margin-top:15px;
+
+
+border-radius:12px;
+
+
+border:none;
+
+
+
+background:
+
+
+linear-gradient(
+
+90deg,
+
+rgba(252,247,247,.25),
+
+rgba(255,255,255,.05)
+
+);
+
+
+
+color:white;
+
+
+
+font-size:17px;
+
+
+
+font-weight:bold;
+
+
+
+cursor:pointer;
+
+
+
+transition:.3s;
+
+
+
+border:
+
+1px solid rgba(70,70,70,.3);
+
+
+}
+
+
+
+.btn:hover{
+
+
+transform:scale(1.05);
+
+
+
+background:#111;
+
+
+
+box-shadow:
+
+0 0 25px rgb(80,80,80);
+
+
+}
+
+
+
+
+
+
+
+
+/* STATUS */
+
+
+.status{
+
+
+margin-top:30px;
+
+
+padding:12px;
+
+
+
+background:
+
+rgba(0,255,0,.1);
+
+
+
+border-radius:10px;
+
+
+
+color:#00ff55;
+
+
+
+font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+/* FOOTER */
+
+
+.footer{
+
+
+margin-top:25px;
+
+
+font-size:13px;
+
+
+color:#888;
+
+
+}
+
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="background">
+
+
+
+<div class="container">
+
+
+
+
+
+<div class="logo-text">
+
+
+<h1>
+
+MC_HINTERHALT
+
+</h1>
+
+
+<span>
+
+OFFICIAL COMMUNITY
+
+</span>
+
+
+
+<div class="identity">
+
+
+<div>
+
+<b>CREATOR</b>
+
+<br>
+
+MC_Hinterhalt
+
+</div>
+
+
+
+<div>
+
+<b>NETWORK</b>
+
+<br>
+
+Evolution Creative Ink
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<button class="btn"
+
+onclick="window.open('https://www.youtube.com/channel/UCSMrT9ccNsAJkq8xxeCcp3A','_blank')">
+
+▶ Pyjama Mysterys
+
+</button>
+
+
+
+
+
+
+<button class="btn"
+
+onclick="window.open('https://www.youtube.com/@MC_Hinterhalt','_blank')">
+
+▶ MC_Hinterhalt
+
+</button>
+
+
+
+
+
+
+
+<button class="btn"
+
+onclick="window.open('https://www.youtube.com/@GamingHinterhalt','_blank')">
+
+▶ Gaming MC_Hinterhalt
+
+</button>
+
+
+
+
+
+
+
+<button class="btn"
+
+onclick="window.open('https://discord.gg/aEPNQPve5C','_blank')">
+
+💬 Official Discord
+
+</button>
+
+
+
+
+
+
+
+<div class="status">
+
+● COMMUNITY ONLINE
+
+</div>
+
+
+
+
+
+
+
+<div class="footer">
+
+
+© 2026 Evolution Creative Ink
+
+
+<br>
+
+
+Created for MC_Hinterhalt
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+</body>
+
+
+</html>
