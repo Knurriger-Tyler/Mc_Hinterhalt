@@ -12,6 +12,44 @@
             box-sizing:border-box;
             font-family:"Segoe UI",Arial,sans-serif;
         }
+    /* Discord Support */
+
+        .support-box{
+            margin-top:25px;
+            padding:18px;
+            border-radius:15px;
+            background:rgba(255,255,255,.05);
+            border:1px solid rgba(88,101,242,.45);
+            text-align:center;
+        }
+
+        .support-box h3{
+            color:#5865F2;
+            margin-bottom:10px;
+        }
+
+        .support-box p{
+            color:#d8d8d8;
+            font-size:14px;
+            line-height:1.5;
+            margin-bottom:15px;
+        }
+
+        .support-btn{
+            display:inline-block;
+            background:#5865F2;
+            color:#fff;
+            text-decoration:none;
+            padding:12px 24px;
+            border-radius:10px;
+            font-weight:bold;
+            transition:.3s;
+        }
+
+        .support-btn:hover{
+            background:#4752C4;
+            transform:scale(1.05);
+        }
 
         body{
             background:#000;
@@ -307,6 +345,20 @@
 
         <div class="status" id="statusText">● COMMUNITY ONLINE</div>
 
+        <div class="support-box">
+    <h3>Need Help?</h3>
+    <p>
+        If you experience any issues, bugs, or errors while using this website,
+        please contact our Discord Support.
+    </p>
+
+    <a class="support-btn"
+       href="https://discord.com/users/1464154386673434754"
+       target="_blank">
+        Contact Discord Support
+    </a>
+    </div>
+
         <div class="footer" id="footerText">
             © 2025 Evolution Creative Ink<br>
             Created for MC_Hinterhalt
@@ -403,19 +455,6 @@
         localStorage.setItem('mc_language', lang);
     }
 
-    const languageSelect = document.getElementById('languageSelect');
-    languageSelect.addEventListener('change', () => {
-        setLanguage(languageSelect.value);
-    });
-
-    // LOAD SAVED SETTINGS
-    const savedLang = localStorage.getItem('mc_language') || 'de';
-    const savedVolume = parseFloat(localStorage.getItem('mc_volume') || '0.3');
-
-    languageSelect.value = savedLang;
-    volumeSlider.value = savedVolume;
-    volume = savedVolume;
-    setLanguage(savedLang);
 </script>
 
 </body>
