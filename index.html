@@ -1,459 +1,998 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MC_Hinterhalt Launcher</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MC_Hinterhalt Launcher</title>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:"Segoe UI",Arial,sans-serif;
-        }
-    /* Discord Support */
+<style>
 
-        .support-box{
-            margin-top:25px;
-            padding:18px;
-            border-radius:15px;
-            background:rgba(255,255,255,.05);
-            border:1px solid rgba(88,101,242,.45);
-            text-align:center;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",Arial,sans-serif;
+}
 
-        .support-box h3{
-            color:#5865F2;
-            margin-bottom:10px;
-        }
+body{
+    background:#000;
+    color:white;
+    overflow:hidden;
+}
 
-        .support-box p{
-            color:#d8d8d8;
-            font-size:14px;
-            line-height:1.5;
-            margin-bottom:15px;
-        }
+/* DISCORD SUPPORT */
 
-        .support-btn{
-            display:inline-block;
-            background:#5865F2;
-            color:#fff;
-            text-decoration:none;
-            padding:12px 24px;
-            border-radius:10px;
-            font-weight:bold;
-            transition:.3s;
-        }
+.support-box{
+    margin-top:25px;
+    padding:18px;
+    border-radius:15px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(88,101,242,.45);
+    text-align:center;
+}
 
-        .support-btn:hover{
-            background:#4752C4;
-            transform:scale(1.05);
-        }
+.support-box h3{
+    color:#5865F2;
+    margin-bottom:10px;
+}
 
-        body{
-            background:#000;
-            color:white;
-            overflow:hidden;
-        }
+.support-box p{
+    color:#d8d8d8;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:15px;
+}
 
-        /* BACKGROUND */
-        .background{
-            width:100%;
-            height:100vh;
-            background:
-                linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.85)),
-                url("https://images.pushsquare.com/2b652d169e6e9/large.jpg");
-            background-size:cover;
-            background-position:center;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            position:relative;
-        }
+.support-btn{
+    display:inline-block;
+    background:#5865F2;
+    color:#fff;
+    text-decoration:none;
+    padding:12px 24px;
+    border-radius:10px;
+    font-weight:bold;
+    transition:.3s;
+}
 
-        .background::before{
-            content:"";
-            position:absolute;
-            width:600px;
-            height:600px;
-            background:#3d3d3d;
-            filter:blur(180px);
-            opacity:.25;
-            animation:move 8s infinite alternate;
-        }
+.support-btn:hover{
+    background:#4752C4;
+    transform:scale(1.05);
+}
 
-        @keyframes move{
-            from{ transform:translate(-200px,-100px); }
-            to{ transform:translate(250px,150px); }
-        }
+/* BACKGROUND */
 
-        /* SETTINGS BUTTON */
-        .settings-btn{
-            position:absolute;
-            top:20px;
-            right:20px;
-            width:50px;
-            height:50px;
-            border-radius:50%;
-            border:none;
-            background:rgba(255,255,255,.12);
-            color:white;
-            font-size:24px;
-            cursor:pointer;
-            backdrop-filter:blur(10px);
-            transition:.3s;
-            z-index:10;
-        }
+.background{
+    width:100%;
+    height:100vh;
 
-        .settings-btn:hover{
-            background:rgba(255,255,255,.22);
-            transform:rotate(90deg);
-        }
+    background:
+        linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.85)),
+        url("https://images.pushsquare.com/2b652d169e6e9/large.jpg");
 
-        /* SETTINGS MENU */
-        .settings-menu{
-            position:absolute;
-            top:80px;
-            right:20px;
-            width:260px;
-            background:rgba(10,10,10,.92);
-            border:1px solid rgba(255,255,255,.15);
-            border-radius:18px;
-            padding:20px;
-            backdrop-filter:blur(15px);
-            display:none;
-            z-index:20;
-        }
+    background-size:cover;
+    background-position:center;
 
-        .settings-menu.active{
-            display:block;
-        }
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-        .settings-menu h3{
-            margin-bottom:15px;
-            font-size:18px;
-        }
+    position:relative;
+}
 
-        .setting-group{
-            margin-bottom:18px;
-        }
+.background::before{
+    content:"";
+    position:absolute;
 
-        .setting-group label{
-            display:block;
-            margin-bottom:8px;
-            font-size:14px;
-            color:#ccc;
-        }
+    width:600px;
+    height:600px;
 
-        .setting-group select,
-        .setting-group input{
-            width:100%;
-        }
+    background:#3d3d3d;
+    filter:blur(180px);
+    opacity:.25;
 
-        .setting-group select{
-            padding:10px;
-            border-radius:10px;
-            border:none;
-            background:#1b1b1b;
-            color:white;
-        }
+    animation:move 8s infinite alternate;
+}
 
-        /* MAIN CONTAINER */
-        .container{
-            width:420px;
-            background:rgba(0,0,0,.65);
-            border:1px solid rgba(255,255,255,.15);
-            backdrop-filter:blur(15px);
-            border-radius:25px;
-            padding:35px;
-            text-align:center;
-            box-shadow:0 0 50px rgba(58,58,58,.25);
-            animation:show 1s ease;
-            position:relative;
-            z-index:5;
-        }
+@keyframes move{
+    from{
+        transform:translate(-200px,-100px);
+    }
 
-        @keyframes show{
-            from{
-                opacity:0;
-                transform:translateY(40px);
-            }
-            to{
-                opacity:1;
-                transform:none;
-            }
-        }
+    to{
+        transform:translate(250px,150px);
+    }
+}
 
-        /* TITLE */
-        .logo-text{
-            margin-bottom:20px;
-        }
+/* SETTINGS BUTTON */
 
-        .logo-text h1{
-            font-size:32px;
-            letter-spacing:4px;
-            color:white;
-            text-shadow:0 0 15px rgba(255,255,255,.4);
-        }
+.settings-btn{
+    position:absolute;
 
-        .logo-text span{
-            color:#cacaca;
-            font-size:13px;
-            letter-spacing:5px;
-        }
+    top:20px;
+    right:20px;
 
-        /* IDENTITY PANEL */
-        .identity{
-            margin-top:25px;
-            margin-bottom:30px;
-            display:flex;
-            justify-content:center;
-            gap:15px;
-        }
+    width:50px;
+    height:50px;
 
-        .identity div{
-            background:rgba(255,255,255,.05);
-            border:1px solid rgba(255,255,255,.15);
-            border-radius:12px;
-            padding:12px;
-            width:160px;
-            font-size:12px;
-            color:#aaa;
-        }
+    border-radius:50%;
+    border:none;
 
-        .identity b{
-            color:white;
-            font-size:11px;
-            letter-spacing:2px;
-        }
+    background:rgba(255,255,255,.12);
+    color:white;
 
-        /* BUTTONS */
-        .btn{
-            width:100%;
-            padding:15px;
-            margin-top:15px;
-            border-radius:12px;
-            border:none;
-            background:linear-gradient(90deg, rgba(252,247,247,.25), rgba(255,255,255,.05));
-            color:white;
-            font-size:17px;
-            font-weight:bold;
-            cursor:pointer;
-            transition:.3s;
-            border:1px solid rgba(70,70,70,.3);
-        }
+    font-size:24px;
+    cursor:pointer;
 
-        .btn:hover{
-            transform:scale(1.05);
-            background:#111;
-            box-shadow:0 0 25px rgb(80,80,80);
-        }
+    backdrop-filter:blur(10px);
 
-        /* STATUS */
-        .status{
-            margin-top:30px;
-            padding:12px;
-            background:rgba(0,255,0,.1);
-            border-radius:10px;
-            color:#00ff55;
-            font-weight:bold;
-        }
+    transition:.3s;
 
-        /* FOOTER */
-        .footer{
-            margin-top:25px;
-            font-size:13px;
-            color:#888;
-        }
+    z-index:10;
+}
 
-        /* MOBILE */
-        @media (max-width:500px){
-            .container{
-                width:92%;
-                padding:25px;
-            }
+.settings-btn:hover{
+    background:rgba(255,255,255,.22);
+    transform:rotate(90deg);
+}
 
-            .identity{
-                flex-direction:column;
-                align-items:center;
-            }
+/* SETTINGS MENU */
 
-            .identity div{
-                width:100%;
-            }
-        }
-    </style>
+.settings-menu{
+    position:absolute;
+
+    top:80px;
+    right:20px;
+
+    width:260px;
+
+    background:rgba(10,10,10,.92);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    backdrop-filter:blur(15px);
+
+    display:none;
+
+    z-index:20;
+}
+
+.settings-menu.active{
+    display:block;
+}
+
+.settings-menu h3{
+    margin-bottom:15px;
+    font-size:18px;
+}
+
+.setting-group{
+    margin-bottom:18px;
+}
+
+.setting-group label{
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+    color:#ccc;
+}
+
+.setting-group select,
+.setting-group input{
+    width:100%;
+}
+
+.setting-group select{
+    padding:10px;
+
+    border-radius:10px;
+    border:none;
+
+    background:#1b1b1b;
+    color:white;
+}
+
+/* MAIN CONTAINER */
+
+.container{
+    width:420px;
+
+    background:rgba(0,0,0,.65);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    text-align:center;
+
+    box-shadow:0 0 50px rgba(58,58,58,.25);
+
+    animation:show 1s ease;
+
+    position:relative;
+    z-index:5;
+}
+
+@keyframes show{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+
+}
+
+/* TITLE */
+
+.logo-text{
+    margin-bottom:20px;
+}
+
+.logo-text h1{
+    font-size:32px;
+
+    letter-spacing:4px;
+
+    color:white;
+
+    text-shadow:0 0 15px rgba(255,255,255,.4);
+}
+
+.logo-text span{
+    color:#cacaca;
+
+    font-size:13px;
+
+    letter-spacing:5px;
+}
+
+/* IDENTITY PANEL */
+
+.identity{
+    margin-top:25px;
+    margin-bottom:30px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+}
+
+.identity div{
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:12px;
+
+    padding:12px;
+
+    width:160px;
+
+    font-size:12px;
+
+    color:#aaa;
+}
+
+.identity b{
+    color:white;
+
+    font-size:11px;
+
+    letter-spacing:2px;
+}
+
+/* BUTTONS */
+
+.btn{
+    width:100%;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    border-radius:12px;
+
+    border:none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(252,247,247,.25),
+            rgba(255,255,255,.05)
+        );
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    border:1px solid rgba(70,70,70,.3);
+}
+
+.btn:hover{
+    transform:scale(1.05);
+
+    background:#111;
+
+    box-shadow:0 0 25px rgb(80,80,80);
+}
+
+/* STATUS */
+
+.status{
+    margin-top:30px;
+
+    padding:12px;
+
+    background:rgba(0,255,0,.1);
+
+    border-radius:10px;
+
+    color:#00ff55;
+
+    font-weight:bold;
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:25px;
+
+    font-size:13px;
+
+    color:#888;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+    .container{
+        width:92%;
+        padding:25px;
+    }
+
+    .identity{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .identity div{
+        width:100%;
+    }
+
+}
+
+</style>
 </head>
+
 <body>
 
 <div class="background">
 
-    <button class="settings-btn" id="settingsBtn">⚙</button>
+    <!-- SETTINGS BUTTON -->
 
-    <div class="settings-menu" id="settingsMenu">
-        <h3 id="settingsTitle">⚙ Einstellungen</h3>
+    <button
+        class="settings-btn"
+        id="settingsBtn">
+        ⚙
+    </button>
+
+
+    <!-- SETTINGS MENU -->
+
+    <div
+        class="settings-menu"
+        id="settingsMenu">
+
+        <h3 id="settingsTitle">
+            ⚙ Einstellungen
+        </h3>
 
         <div class="setting-group">
-            <label id="languageLabel">Sprache</label>
+
+            <label id="languageLabel">
+                Sprache
+            </label>
+
             <select id="languageSelect">
-                <option value="de">Deutsch</option>
-                <option value="en">English</option>
+
+                <option value="de">
+                    Deutsch
+                </option>
+
+                <option value="en">
+                    English
+                </option>
+
             </select>
+
         </div>
 
         <div class="setting-group">
-            <label id="volumeLabel">Lautstärke</label>
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.3">
+
+            <label id="volumeLabel">
+                Lautstärke
+            </label>
+
+            <input
+                type="range"
+                id="volumeSlider"
+                min="0"
+                max="1"
+                step="0.05"
+                value="0.3">
+
         </div>
+
     </div>
+
+
+    <!-- MAIN -->
 
     <div class="container">
 
         <div class="logo-text">
-            <h1>MC_HINTERHALT</h1>
-            <span id="subtitle">OFFICIAL COMMUNITY</span>
+
+            <h1>
+                MC_HINTERHALT
+            </h1>
+
+            <span id="subtitle">
+                OFFICIAL COMMUNITY
+            </span>
+
+
+            <!-- IDENTITY -->
 
             <div class="identity">
-                <div>
-                    <b id="creatorTitle">CREATOR</b><br>
-                    MC_Hinterhalt
-                </div>
 
                 <div>
-                    <b id="developerTitle">DEVELOPER</b><br>
-                    Evolution Creative Ink
+
+                    <b id="creatorTitle">
+                        CREATOR
+                    </b>
+
+                    <br>
+
+                    MC_Hinterhalt
+
                 </div>
+
+
+                <div>
+
+                    <b id="developerTitle">
+                        DEVELOPER
+                    </b>
+
+                    <br>
+
+                    Evolution Creative Ink
+
+                </div>
+
             </div>
+
         </div>
 
-        <button class="btn" id="btnMysterys" onclick="window.open('https://www.youtube.com/channel/UCSMrT9ccNsAJkq8xxeCcp3A','_blank')">
+
+        <!-- YOUTUBE BUTTONS -->
+
+        <button
+            class="btn"
+            id="btnMysterys"
+            onclick="window.open(
+            'https://www.youtube.com/channel/UCSMrT9ccNsAJkq8xxeCcp3A',
+            '_blank')">
+
             ▶ Pyjama Mysterys
+
         </button>
 
-        <button class="btn" id="btnMain" onclick="window.open('https://www.youtube.com/@MC_Hinterhalt','_blank')">
+
+        <button
+            class="btn"
+            id="btnMain"
+            onclick="window.open(
+            'https://www.youtube.com/@MC_Hinterhalt',
+            '_blank')">
+
             ▶ MC_Hinterhalt
+
         </button>
 
-        <button class="btn" id="btnGaming" onclick="window.open('https://www.youtube.com/@GamingHinterhalt','_blank')">
+
+        <button
+            class="btn"
+            id="btnGaming"
+            onclick="window.open(
+            'https://www.youtube.com/@GamingHinterhalt',
+            '_blank')">
+
             ▶ Gaming MC_Hinterhalt
+
         </button>
 
-        <button class="btn" id="btnDiscord" onclick="window.open('https://discord.gg/aEPNQPve5C','_blank')">
-            💬 Official Discord
+
+        <!-- DISCORD -->
+
+        <button
+            class="btn"
+            id="btnDiscord"
+            onclick="window.open(
+            'https://discord.gg/aEPNQPve5C',
+            '_blank')">
+
+            💬 Offizieller Discord
+
         </button>
 
-        <div class="status" id="statusText">● COMMUNITY ONLINE</div>
+
+        <!-- STATUS -->
+
+        <div
+            class="status"
+            id="statusText">
+
+            ● COMMUNITY ONLINE
+
+        </div>
+
+
+        <!-- SUPPORT -->
 
         <div class="support-box">
-    <h3>Need Help?</h3>
-    <p>
-        If you experience any issues, bugs, or errors while using this website,
-        please contact our Discord Support.
-    </p>
 
-    <a class="support-btn"
-       href="https://discord.com/users/1464154386673434754"
-       target="_blank">
-        Contact Discord Support
-    </a>
-    </div>
+            <h3 id="supportTitle">
+                Hilfe benötigt?
+            </h3>
 
-        <div class="footer" id="footerText">
-            © 2025 Evolution Creative Ink<br>
-            Created for MC_Hinterhalt
+            <p id="supportText">
+
+                Wenn du Probleme, Bugs oder Fehler
+                bei der Nutzung dieser Website hast,
+                kontaktiere bitte unseren Discord-Support.
+
+            </p>
+
+
+            <a
+                class="support-btn"
+                id="supportButton"
+                href="https://discord.com/users/1464154386673434754"
+                target="_blank">
+
+                Discord-Support kontaktieren
+
+            </a>
+
         </div>
+
+
+        <!-- FOOTER -->
+
+        <div
+            class="footer"
+            id="footerText">
+
+            © 2025 Evolution Creative Ink
+            <br>
+            Erstellt für MC_Hinterhalt
+
+        </div>
+
     </div>
+
 </div>
 
+
 <script>
-    // SETTINGS MENU
-    const settingsBtn = document.getElementById('settingsBtn');
-    const settingsMenu = document.getElementById('settingsMenu');
 
-    settingsBtn.addEventListener('click', () => {
-        settingsMenu.classList.toggle('active');
-    });
+/* ================================
+   SETTINGS
+================================ */
 
-    // SIMPLE GAME SOUNDS
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    let volume = 0.3;
+const settingsBtn =
+    document.getElementById("settingsBtn");
 
-    function playTone(freq, duration){
-        const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
+const settingsMenu =
+    document.getElementById("settingsMenu");
 
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
 
-        osc.frequency.value = freq;
-        osc.type = 'square';
+settingsBtn.addEventListener("click", () => {
 
-        gain.gain.value = volume * 0.05;
+    settingsMenu.classList.toggle("active");
 
-        osc.start();
-        osc.stop(audioContext.currentTime + duration);
+});
+
+
+/* ================================
+   SOUNDS
+================================ */
+
+const audioContext =
+    new (window.AudioContext ||
+    window.webkitAudioContext)();
+
+let volume = 0.3;
+
+
+function playTone(freq, duration){
+
+    const osc =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+
+    osc.connect(gain);
+
+    gain.connect(audioContext.destination);
+
+
+    osc.frequency.value = freq;
+
+    osc.type = "square";
+
+
+    gain.gain.value =
+        volume * 0.05;
+
+
+    osc.start();
+
+    osc.stop(
+        audioContext.currentTime + duration
+    );
+
+}
+
+
+/* BUTTON HOVER SOUND */
+
+document
+.querySelectorAll(".btn")
+.forEach(btn => {
+
+    btn.addEventListener(
+        "mouseenter",
+        () => playTone(700,0.03)
+    );
+
+    btn.addEventListener(
+        "click",
+        () => playTone(400,0.08)
+    );
+
+});
+
+
+/* SETTINGS SOUND */
+
+settingsBtn.addEventListener(
+    "mouseenter",
+    () => playTone(800,0.03)
+);
+
+settingsBtn.addEventListener(
+    "click",
+    () => playTone(500,0.05)
+);
+
+
+/* ================================
+   VOLUME
+================================ */
+
+const volumeSlider =
+    document.getElementById("volumeSlider");
+
+
+const savedVolume =
+    localStorage.getItem("mc_volume");
+
+
+if(savedVolume !== null){
+
+    volume =
+        parseFloat(savedVolume);
+
+    volumeSlider.value =
+        volume;
+
+}
+
+
+volumeSlider.addEventListener(
+    "input",
+    () => {
+
+        volume =
+            parseFloat(volumeSlider.value);
+
+        localStorage.setItem(
+            "mc_volume",
+            volume
+        );
+
+    }
+);
+
+
+/* ================================
+   LANGUAGE SYSTEM
+================================ */
+
+const translations = {
+
+    de: {
+
+        subtitle:
+            "OFFICIAL COMMUNITY",
+
+        creator:
+            "CREATOR",
+
+        developer:
+            "DEVELOPER",
+
+        btnMysterys:
+            "▶ Pyjama Mysterys",
+
+        btnMain:
+            "▶ MC_Hinterhalt",
+
+        btnGaming:
+            "▶ Gaming MC_Hinterhalt",
+
+        btnDiscord:
+            "💬 Offizieller Discord",
+
+        status:
+            "● COMMUNITY ONLINE",
+
+        supportTitle:
+            "Hilfe benötigt?",
+
+        supportText:
+            "Wenn du Probleme, Bugs oder Fehler bei der Nutzung dieser Website hast, kontaktiere bitte unseren Discord-Support.",
+
+        supportButton:
+            "Discord-Support kontaktieren",
+
+        footer:
+            "© 2025 Evolution Creative Ink<br>Erstellt für MC_Hinterhalt",
+
+        settings:
+            "⚙ Einstellungen",
+
+        language:
+            "Sprache",
+
+        volume:
+            "Lautstärke"
+
+    },
+
+
+    en: {
+
+        subtitle:
+            "OFFICIAL COMMUNITY",
+
+        creator:
+            "CREATOR",
+
+        developer:
+            "DEVELOPER",
+
+        btnMysterys:
+            "▶ Pyjama Mysterys",
+
+        btnMain:
+            "▶ MC_Hinterhalt",
+
+        btnGaming:
+            "▶ Gaming MC_Hinterhalt",
+
+        btnDiscord:
+            "💬 Official Discord",
+
+        status:
+            "● COMMUNITY ONLINE",
+
+        supportTitle:
+            "Need Help?",
+
+        supportText:
+            "If you experience any issues, bugs, or errors while using this website, please contact our Discord Support.",
+
+        supportButton:
+            "Contact Discord Support",
+
+        footer:
+            "© 2025 Evolution Creative Ink<br>Created for MC_Hinterhalt",
+
+        settings:
+            "⚙ Settings",
+
+        language:
+            "Language",
+
+        volume:
+            "Volume"
+
     }
 
-    document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('mouseenter', () => playTone(700, 0.03));
-        btn.addEventListener('click', () => playTone(400, 0.08));
-    });
+};
 
-    settingsBtn.addEventListener('mouseenter', () => playTone(800, 0.03));
-    settingsBtn.addEventListener('click', () => playTone(500, 0.05));
 
-    // VOLUME
-    const volumeSlider = document.getElementById('volumeSlider');
-    volumeSlider.addEventListener('input', () => {
-        volume = parseFloat(volumeSlider.value);
-        localStorage.setItem('mc_volume', volume);
-    });
+/* ================================
+   CHANGE LANGUAGE
+================================ */
 
-    // LANGUAGE SYSTEM
-    const translations = {
-        de: {
-            subtitle: 'OFFICIAL COMMUNITY',
-            creator: 'CREATOR',
-            developer: 'DEVELOPER',
-            btnGaming: '▶ Gaming MC_Hinterhalt',
-            btnDiscord: '💬 Offizieller Discord',
-            status: '● COMMUNITY ONLINE',
-            footer: '© 2025 Evolution Creative Ink<br>Erstellt für MC_Hinterhalt',
-            settings: '⚙ Einstellungen',
-            language: 'Sprache',
-            volume: 'Lautstärke'
-        },
-        en: {
-            subtitle: 'OFFICIAL COMMUNITY',
-            creator: 'CREATOR',
-            developer: 'DEVELOPER',
-            btnGaming: '▶ Gaming MC_Hinterhalt',
-            btnDiscord: '💬 Official Discord',
-            status: '● COMMUNITY ONLINE',
-            footer: '© 2025 Evolution Creative Ink<br>Created for MC_Hinterhalt',
-            settings: '⚙ Settings',
-            language: 'Language',
-            volume: 'Volume'
-        }
-    };
+function setLanguage(lang){
 
-    function setLanguage(lang){
-        const t = translations[lang];
+    const t =
+        translations[lang];
 
-        document.getElementById('subtitle').innerHTML = t.subtitle;
-        document.getElementById('creatorTitle').innerHTML = t.creator;
-        document.getElementById('developerTitle').innerHTML = t.developer;
-        document.getElementById('btnGaming').innerHTML = t.btnGaming;
-        document.getElementById('btnDiscord').innerHTML = t.btnDiscord;
-        document.getElementById('statusText').innerHTML = t.status;
-        document.getElementById('footerText').innerHTML = t.footer;
-        document.getElementById('settingsTitle').innerHTML = t.settings;
-        document.getElementById('languageLabel').innerHTML = t.language;
-        document.getElementById('volumeLabel').innerHTML = t.volume;
 
-        localStorage.setItem('mc_language', lang);
+    document
+        .getElementById("subtitle")
+        .innerHTML = t.subtitle;
+
+
+    document
+        .getElementById("creatorTitle")
+        .innerHTML = t.creator;
+
+
+    document
+        .getElementById("developerTitle")
+        .innerHTML = t.developer;
+
+
+    document
+        .getElementById("btnMysterys")
+        .innerHTML = t.btnMysterys;
+
+
+    document
+        .getElementById("btnMain")
+        .innerHTML = t.btnMain;
+
+
+    document
+        .getElementById("btnGaming")
+        .innerHTML = t.btnGaming;
+
+
+    document
+        .getElementById("btnDiscord")
+        .innerHTML = t.btnDiscord;
+
+
+    document
+        .getElementById("statusText")
+        .innerHTML = t.status;
+
+
+    document
+        .getElementById("supportTitle")
+        .innerHTML = t.supportTitle;
+
+
+    document
+        .getElementById("supportText")
+        .innerHTML = t.supportText;
+
+
+    document
+        .getElementById("supportButton")
+        .innerHTML = t.supportButton;
+
+
+    document
+        .getElementById("footerText")
+        .innerHTML = t.footer;
+
+
+    document
+        .getElementById("settingsTitle")
+        .innerHTML = t.settings;
+
+
+    document
+        .getElementById("languageLabel")
+        .innerHTML = t.language;
+
+
+    document
+        .getElementById("volumeLabel")
+        .innerHTML = t.volume;
+
+
+    document.documentElement.lang =
+        lang;
+
+
+    localStorage.setItem(
+        "mc_language",
+        lang
+    );
+
+}
+
+
+/* ================================
+   LANGUAGE SELECT
+================================ */
+
+const languageSelect =
+    document.getElementById(
+        "languageSelect"
+    );
+
+
+languageSelect.addEventListener(
+    "change",
+    () => {
+
+        setLanguage(
+            languageSelect.value
+        );
+
     }
+);
+
+
+/* ================================
+   LOAD SAVED LANGUAGE
+================================ */
+
+const savedLanguage =
+    localStorage.getItem(
+        "mc_language"
+    );
+
+
+if(savedLanguage){
+
+    languageSelect.value =
+        savedLanguage;
+
+    setLanguage(
+        savedLanguage
+    );
+
+}else{
+
+    setLanguage("de");
+
+}
 
 </script>
 
