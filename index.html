@@ -3,15 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MC_Hinterhalt Launcher</title>
+
+<title>MC_Hinterhalt | Official Community</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:"Segoe UI",Arial,sans-serif;
+}
+
+:root{
+    --accent:#5865f2;
+    --accent2:#8b5cf6;
+    --accentGlow:rgba(88,101,242,.45);
+    --glass:rgba(5,5,8,.72);
+    --border:rgba(255,255,255,.14);
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
 }
 
 body{
@@ -20,53 +34,21 @@ body{
     overflow:hidden;
 }
 
-/* DISCORD SUPPORT */
-
-.support-box{
-    margin-top:25px;
-    padding:18px;
-    border-radius:15px;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(88,101,242,.45);
-    text-align:center;
-}
-
-.support-box h3{
-    color:#5865F2;
-    margin-bottom:10px;
-}
-
-.support-box p{
-    color:#d8d8d8;
-    font-size:14px;
-    line-height:1.5;
-    margin-bottom:15px;
-}
-
-.support-btn{
-    display:inline-block;
-    background:#5865F2;
-    color:#fff;
-    text-decoration:none;
-    padding:12px 24px;
-    border-radius:10px;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.support-btn:hover{
-    background:#4752C4;
-    transform:scale(1.05);
-}
-
-/* BACKGROUND */
+/* =========================================================
+   BACKGROUND
+========================================================= */
 
 .background{
+    position:relative;
     width:100%;
     height:100vh;
+    overflow:hidden;
 
     background:
-        linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.85)),
+        linear-gradient(
+            rgba(0,0,0,.52),
+            rgba(0,0,0,.88)
+        ),
         url("https://images.pushsquare.com/2b652d169e6e9/large.jpg");
 
     background-size:cover;
@@ -75,67 +57,179 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
+}
 
-    position:relative;
+/* Hintergrund-Glow */
+
+.background::before,
+.background::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
 }
 
 .background::before{
-    content:"";
-    position:absolute;
+    width:650px;
+    height:650px;
 
-    width:600px;
-    height:600px;
+    left:-220px;
+    top:-220px;
 
-    background:#3d3d3d;
+    background:var(--accent);
     filter:blur(180px);
-    opacity:.25;
+    opacity:.14;
 
-    animation:move 8s infinite alternate;
+    animation:ambientOne 12s ease-in-out infinite alternate;
 }
 
-@keyframes move{
-    from{
-        transform:translate(-200px,-100px);
+.background::after{
+    width:550px;
+    height:550px;
+
+    right:-180px;
+    bottom:-200px;
+
+    background:var(--accent2);
+    filter:blur(170px);
+    opacity:.11;
+
+    animation:ambientTwo 15s ease-in-out infinite alternate;
+}
+
+@keyframes ambientOne{
+    0%{
+        transform:translate(0,0) scale(1);
     }
 
-    to{
-        transform:translate(250px,150px);
+    100%{
+        transform:translate(280px,180px) scale(1.25);
     }
 }
 
-/* SETTINGS BUTTON */
+@keyframes ambientTwo{
+    0%{
+        transform:translate(0,0) scale(1);
+    }
 
-.settings-btn{
+    100%{
+        transform:translate(-220px,-150px) scale(1.2);
+    }
+}
+
+/* =========================================================
+   PREMIUM PARTICLE CANVAS
+========================================================= */
+
+#particles{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:1;
+
+    pointer-events:none;
+}
+
+/* zusätzliche Lichtschicht */
+
+.particle-vignette{
+    position:absolute;
+    inset:0;
+
+    z-index:2;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 0%,
+            rgba(0,0,0,.08) 45%,
+            rgba(0,0,0,.48) 100%
+        );
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.top-bar{
     position:absolute;
 
     top:20px;
+    left:20px;
     right:20px;
 
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    z-index:30;
+}
+
+.clock{
+    padding:10px 16px;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(14px);
+
+    color:#ddd;
+
+    font-size:13px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.25);
+}
+
+/* =========================================================
+   SETTINGS BUTTON
+========================================================= */
+
+.settings-btn{
     width:50px;
     height:50px;
 
     border-radius:50%;
-    border:none;
 
-    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.14);
+
+    background:rgba(255,255,255,.08);
+
     color:white;
 
-    font-size:24px;
+    font-size:23px;
+
     cursor:pointer;
 
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(15px);
 
-    transition:.3s;
+    transition:.35s;
 
-    z-index:10;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.3);
 }
 
 .settings-btn:hover{
-    background:rgba(255,255,255,.22);
-    transform:rotate(90deg);
+    background:var(--accent);
+
+    transform:
+        rotate(90deg)
+        scale(1.08);
+
+    box-shadow:
+        0 0 25px var(--accentGlow);
 }
 
-/* SETTINGS MENU */
+/* =========================================================
+   SETTINGS
+========================================================= */
 
 .settings-menu{
     position:absolute;
@@ -143,30 +237,48 @@ body{
     top:80px;
     right:20px;
 
-    width:260px;
-
-    background:rgba(10,10,10,.92);
-
-    border:1px solid rgba(255,255,255,.15);
-
-    border-radius:18px;
+    width:290px;
 
     padding:20px;
 
-    backdrop-filter:blur(15px);
+    background:rgba(7,7,10,.95);
+
+    border:1px solid rgba(255,255,255,.13);
+
+    border-radius:18px;
+
+    backdrop-filter:blur(25px);
 
     display:none;
 
-    z-index:20;
+    z-index:100;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.65);
+
+    animation:settingsIn .25s ease;
 }
 
 .settings-menu.active{
     display:block;
 }
 
+@keyframes settingsIn{
+    from{
+        opacity:0;
+        transform:
+            translateY(-12px)
+            scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
 .settings-menu h3{
-    margin-bottom:15px;
-    font-size:18px;
+    margin-bottom:18px;
 }
 
 .setting-group{
@@ -178,69 +290,185 @@ body{
 
     margin-bottom:8px;
 
-    font-size:14px;
-    color:#ccc;
-}
+    color:#aaa;
 
-.setting-group select,
-.setting-group input{
-    width:100%;
+    font-size:13px;
 }
 
 .setting-group select{
+    width:100%;
+
     padding:10px;
 
     border-radius:10px;
-    border:none;
 
-    background:#1b1b1b;
+    border:1px solid #333;
+
+    background:#151515;
+
     color:white;
+
+    outline:none;
 }
 
-/* MAIN CONTAINER */
+input[type="range"]{
+    width:100%;
+    accent-color:var(--accent);
+}
+
+.toggle-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.toggle-row > label:first-child{
+    margin:0;
+}
+
+.toggle{
+    position:relative;
+
+    width:46px;
+    height:24px;
+}
+
+.toggle input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+
+    background:#303030;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.slider::before{
+    content:"";
+
+    position:absolute;
+
+    width:18px;
+    height:18px;
+
+    left:3px;
+    top:3px;
+
+    background:white;
+
+    border-radius:50%;
+
+    transition:.3s;
+}
+
+.toggle input:checked + .slider{
+    background:var(--accent);
+
+    box-shadow:
+        0 0 12px var(--accentGlow);
+}
+
+.toggle input:checked + .slider::before{
+    transform:translateX(22px);
+}
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
 .container{
-    width:420px;
+    position:relative;
 
-    background:rgba(0,0,0,.65);
+    width:440px;
+    max-width:92vw;
 
-    border:1px solid rgba(255,255,255,.15);
+    max-height:90vh;
 
-    backdrop-filter:blur(15px);
-
-    border-radius:25px;
+    overflow-y:auto;
 
     padding:35px;
 
+    border-radius:27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,20,25,.72),
+            rgba(0,0,0,.72)
+        );
+
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(22px);
+
     text-align:center;
 
-    box-shadow:0 0 50px rgba(58,58,58,.25);
+    z-index:10;
 
-    animation:show 1s ease;
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.6),
+        inset 0 1px 0 rgba(255,255,255,.07);
 
-    position:relative;
-    z-index:5;
+    animation:
+        containerIn
+        .9s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes show{
+.container::before{
+    content:"";
 
+    position:absolute;
+
+    left:10%;
+    right:10%;
+    top:0;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.35),
+            transparent
+        );
+}
+
+.container::-webkit-scrollbar{
+    width:4px;
+}
+
+.container::-webkit-scrollbar-thumb{
+    background:#444;
+    border-radius:20px;
+}
+
+@keyframes containerIn{
     from{
         opacity:0;
-        transform:translateY(40px);
+        transform:
+            translateY(45px)
+            scale(.94);
+        filter:blur(5px);
     }
 
     to{
         opacity:1;
         transform:none;
+        filter:blur(0);
     }
-
 }
 
-/* TITLE */
-
-.logo-text{
-    margin-bottom:20px;
-}
+/* =========================================================
+   LOGO
+========================================================= */
 
 .logo-text h1{
     font-size:32px;
@@ -249,141 +477,592 @@ body{
 
     color:white;
 
-    text-shadow:0 0 15px rgba(255,255,255,.4);
+    text-shadow:
+        0 0 12px rgba(255,255,255,.35),
+        0 0 35px var(--accentGlow);
+
+    animation:
+        logoPulse
+        4s ease-in-out infinite;
+}
+
+@keyframes logoPulse{
+    0%,100%{
+        filter:brightness(1);
+    }
+
+    50%{
+        filter:brightness(1.15);
+    }
 }
 
 .logo-text span{
-    color:#cacaca;
+    display:block;
 
-    font-size:13px;
+    margin-top:6px;
+
+    color:#999;
+
+    font-size:12px;
 
     letter-spacing:5px;
 }
 
-/* IDENTITY PANEL */
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:13px;
+
+    margin:25px auto 20px;
+}
+
+.avatar{
+    position:relative;
+
+    width:58px;
+    height:58px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:24px;
+    font-weight:bold;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    box-shadow:
+        0 0 25px var(--accentGlow);
+
+    animation:
+        avatarFloat
+        4s ease-in-out infinite;
+}
+
+.avatar::before{
+    content:"";
+
+    position:absolute;
+
+    inset:-4px;
+
+    border-radius:50%;
+
+    border:1px solid var(--accent);
+
+    opacity:.5;
+
+    animation:
+        avatarRing
+        2.5s linear infinite;
+}
+
+.avatar::after{
+    content:"";
+
+    position:absolute;
+
+    width:12px;
+    height:12px;
+
+    right:-1px;
+    bottom:1px;
+
+    border-radius:50%;
+
+    background:#00ff66;
+
+    border:3px solid #101010;
+
+    box-shadow:
+        0 0 10px #00ff66;
+}
+
+@keyframes avatarFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-4px);
+    }
+}
+
+@keyframes avatarRing{
+    from{
+        transform:rotate(0deg) scale(1);
+    }
+
+    to{
+        transform:rotate(360deg) scale(1.05);
+    }
+}
+
+.profile-text{
+    text-align:left;
+}
+
+.profile-text b{
+    font-size:15px;
+}
+
+.profile-text small{
+    display:block;
+
+    margin-top:3px;
+
+    color:#777;
+}
+
+/* =========================================================
+   IDENTITY
+========================================================= */
 
 .identity{
-    margin-top:25px;
-    margin-bottom:30px;
-
     display:flex;
 
     justify-content:center;
 
-    gap:15px;
+    gap:12px;
+
+    margin-bottom:22px;
 }
 
 .identity div{
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.15);
-
-    border-radius:12px;
+    flex:1;
 
     padding:12px;
 
-    width:160px;
+    border-radius:12px;
 
-    font-size:12px;
+    background:rgba(255,255,255,.035);
 
-    color:#aaa;
+    border:1px solid rgba(255,255,255,.09);
+
+    color:#888;
+
+    font-size:11px;
+
+    transition:.3s;
+}
+
+.identity div:hover{
+    transform:translateY(-3px);
+
+    border-color:var(--accent);
+
+    box-shadow:
+        0 0 18px var(--accentGlow);
 }
 
 .identity b{
     color:white;
 
-    font-size:11px;
+    font-size:10px;
 
     letter-spacing:2px;
 }
 
-/* BUTTONS */
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 .btn{
+    position:relative;
+
     width:100%;
 
     padding:15px;
 
-    margin-top:15px;
+    margin-top:12px;
 
     border-radius:12px;
 
-    border:none;
+    border:1px solid rgba(255,255,255,.11);
 
     background:
         linear-gradient(
-            90deg,
-            rgba(252,247,247,.25),
-            rgba(255,255,255,.05)
+            100deg,
+            rgba(255,255,255,.11),
+            rgba(255,255,255,.025)
         );
 
     color:white;
 
-    font-size:17px;
-
+    font-size:16px;
     font-weight:bold;
 
     cursor:pointer;
 
-    transition:.3s;
+    overflow:hidden;
 
-    border:1px solid rgba(70,70,70,.3);
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        border-color .25s,
+        background .25s;
+}
+
+.btn::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    bottom:0;
+
+    left:-120%;
+
+    width:70%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.3),
+            transparent
+        );
+
+    transform:skewX(-25deg);
+
+    transition:.7s;
+}
+
+.btn:hover::before{
+    left:140%;
 }
 
 .btn:hover{
-    transform:scale(1.05);
+    transform:
+        translateY(-3px)
+        scale(1.015);
 
-    background:#111;
+    border-color:var(--accent);
 
-    box-shadow:0 0 25px rgb(80,80,80);
+    background:
+        linear-gradient(
+            100deg,
+            rgba(88,101,242,.18),
+            rgba(255,255,255,.04)
+        );
+
+    box-shadow:
+        0 0 25px var(--accentGlow);
 }
 
-/* STATUS */
+.btn:active{
+    transform:scale(.97);
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status{
-    margin-top:30px;
+    margin-top:20px;
 
-    padding:12px;
-
-    background:rgba(0,255,0,.1);
+    padding:11px;
 
     border-radius:10px;
 
-    color:#00ff55;
+    color:#00ff66;
 
+    font-size:13px;
     font-weight:bold;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,255,80,.04),
+            rgba(0,255,80,.09),
+            rgba(0,255,80,.04)
+        );
+
+    border:1px solid rgba(0,255,80,.14);
 }
 
-/* FOOTER */
+.status-dot{
+    display:inline-block;
+
+    width:8px;
+    height:8px;
+
+    margin-right:6px;
+
+    border-radius:50%;
+
+    background:#00ff66;
+
+    box-shadow:
+        0 0 10px #00ff66;
+
+    animation:
+        statusPulse
+        1.5s infinite;
+}
+
+@keyframes statusPulse{
+    0%,100%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.35;
+        transform:scale(.7);
+    }
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:8px;
+
+    margin-top:12px;
+}
+
+.stat{
+    padding:10px 5px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+
+    transition:.25s;
+}
+
+.stat:hover{
+    transform:translateY(-2px);
+
+    border-color:var(--accent);
+
+    box-shadow:
+        0 0 15px var(--accentGlow);
+}
+
+.stat strong{
+    display:block;
+
+    color:white;
+
+    font-size:16px;
+}
+
+.stat span{
+    color:#666;
+
+    font-size:9px;
+
+    text-transform:uppercase;
+}
+
+/* =========================================================
+   SUPPORT
+========================================================= */
+
+.support-box{
+    margin-top:22px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(88,101,242,.08),
+            rgba(124,58,237,.035)
+        );
+
+    border:1px solid rgba(88,101,242,.3);
+
+    box-shadow:
+        inset 0 0 25px rgba(88,101,242,.03);
+}
+
+.support-box h3{
+    margin-bottom:8px;
+
+    color:#7289da;
+}
+
+.support-box p{
+    margin-bottom:14px;
+
+    color:#aaa;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+.support-btn{
+    display:inline-block;
+
+    padding:11px 20px;
+
+    border-radius:10px;
+
+    background:#5865f2;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:13px;
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.support-btn:hover{
+    background:#4752c4;
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+
+    box-shadow:
+        0 0 25px rgba(88,101,242,.45);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .footer{
-    margin-top:25px;
+    margin-top:20px;
+
+    color:#666;
+
+    font-size:11px;
+
+    line-height:1.6;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+
+    left:50%;
+    bottom:25px;
+
+    z-index:200;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    background:rgba(10,10,12,.96);
+
+    border:1px solid rgba(255,255,255,.14);
+
+    color:white;
 
     font-size:13px;
 
-    color:#888;
+    opacity:0;
+
+    pointer-events:none;
+
+    transform:
+        translate(-50%,30px)
+        scale(.95);
+
+    transition:.3s;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.5);
 }
 
-/* MOBILE */
+.toast.show{
+    opacity:1;
 
-@media(max-width:500px){
+    transform:
+        translate(-50%,0)
+        scale(1);
+}
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+.performance-mode *,
+.performance-mode *::before,
+.performance-mode *::after{
+    animation:none !important;
+    transition:none !important;
+}
+
+.performance-mode #particles{
+    display:none;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
 
     .container{
-        width:92%;
-        padding:25px;
+        padding:25px 20px;
+        max-height:82vh;
+    }
+
+    .logo-text h1{
+        font-size:25px;
+        letter-spacing:2px;
+    }
+
+    .logo-text span{
+        letter-spacing:3px;
     }
 
     .identity{
         flex-direction:column;
-        align-items:center;
     }
 
-    .identity div{
-        width:100%;
+    .top-bar{
+        top:10px;
+        left:10px;
+        right:10px;
     }
 
+    .settings-menu{
+        top:70px;
+        right:10px;
+    }
+
+    .clock{
+        font-size:11px;
+    }
 }
-
 </style>
 </head>
 
@@ -391,16 +1070,31 @@ body{
 
 <div class="background">
 
-    <!-- SETTINGS BUTTON -->
+    <canvas id="particles"></canvas>
 
-    <button
-        class="settings-btn"
-        id="settingsBtn">
-        ⚙
-    </button>
+    <div class="particle-vignette"></div>
 
 
-    <!-- SETTINGS MENU -->
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div class="clock" id="clock">
+            🕒 00:00:00
+        </div>
+
+        <button
+            class="settings-btn"
+            id="settingsBtn">
+
+            ⚙
+
+        </button>
+
+    </div>
+
+
+    <!-- SETTINGS -->
 
     <div
         class="settings-menu"
@@ -409,6 +1103,7 @@ body{
         <h3 id="settingsTitle">
             ⚙ Einstellungen
         </h3>
+
 
         <div class="setting-group">
 
@@ -430,6 +1125,7 @@ body{
 
         </div>
 
+
         <div class="setting-group">
 
             <label id="volumeLabel">
@@ -443,6 +1139,74 @@ body{
                 max="1"
                 step="0.05"
                 value="0.3">
+
+        </div>
+
+
+        <div class="setting-group">
+
+            <label>
+                Theme
+            </label>
+
+            <select id="themeSelect">
+
+                <option value="blue">
+                    🔵 Blue
+                </option>
+
+                <option value="purple">
+                    🟣 Purple
+                </option>
+
+                <option value="red">
+                    🔴 Red
+                </option>
+
+                <option value="green">
+                    🟢 Green
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="setting-group toggle-row">
+
+            <label>
+                Sounds
+            </label>
+
+            <label class="toggle">
+
+                <input
+                    type="checkbox"
+                    id="soundToggle"
+                    checked>
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <div class="setting-group toggle-row">
+
+            <label>
+                Performance-Modus
+            </label>
+
+            <label class="toggle">
+
+                <input
+                    type="checkbox"
+                    id="performanceToggle">
+
+                <span class="slider"></span>
+
+            </label>
 
         </div>
 
@@ -463,49 +1227,72 @@ body{
                 OFFICIAL COMMUNITY
             </span>
 
+        </div>
 
-            <!-- IDENTITY -->
 
-            <div class="identity">
+        <!-- PROFILE -->
 
-                <div>
+        <div class="profile">
 
-                    <b id="creatorTitle">
-                        CREATOR
-                    </b>
+            <div class="avatar">
+                M
+            </div>
 
-                    <br>
+            <div class="profile-text">
 
+                <b>
                     MC_Hinterhalt
+                </b>
 
-                </div>
-
-
-                <div>
-
-                    <b id="developerTitle">
-                        DEVELOPER
-                    </b>
-
-                    <br>
-
-                    Evolution Creative Ink
-
-                </div>
+                <small>
+                    Official Creator
+                </small>
 
             </div>
 
         </div>
 
 
-        <!-- YOUTUBE BUTTONS -->
+        <!-- IDENTITY -->
+
+        <div class="identity">
+
+            <div>
+
+                <b id="creatorTitle">
+                    CREATOR
+                </b>
+
+                <br>
+
+                MC_Hinterhalt
+
+            </div>
+
+
+            <div>
+
+                <b id="developerTitle">
+                    DEVELOPER
+                </b>
+
+                <br>
+
+                Evolution Creative Ink
+
+            </div>
+
+        </div>
+
+
+        <!-- LINKS -->
 
         <button
             class="btn"
             id="btnMysterys"
-            onclick="window.open(
+            onclick="openLink(
             'https://www.youtube.com/channel/UCSMrT9ccNsAJkq8xxeCcp3A',
-            '_blank')">
+            'Pyjama Mysterys wird geöffnet...')">
 
             ▶ Pyjama Mysterys
 
@@ -515,9 +1302,9 @@ body{
         <button
             class="btn"
             id="btnMain"
-            onclick="window.open(
+            onclick="openLink(
             'https://www.youtube.com/@MC_Hinterhalt',
-            '_blank')">
+            'MC_Hinterhalt wird geöffnet...')">
 
             ▶ MC_Hinterhalt
 
@@ -527,25 +1314,32 @@ body{
         <button
             class="btn"
             id="btnGaming"
-            onclick="window.open(
+            onclick="openLink(
             'https://www.youtube.com/@GamingHinterhalt',
-            '_blank')">
+            'Gaming MC_Hinterhalt wird geöffnet...')">
 
             ▶ Gaming MC_Hinterhalt
 
         </button>
 
 
-        <!-- DISCORD -->
-
         <button
             class="btn"
             id="btnDiscord"
-            onclick="window.open(
+            onclick="openLink(
             'https://discord.gg/aEPNQPve5C',
-            '_blank')">
+            'Discord wird geöffnet...')">
 
             💬 Offizieller Discord
+
+        </button>
+
+
+        <button
+            class="btn"
+            onclick="copyDiscordLink()">
+
+            📋 Discord-Link kopieren
 
         </button>
 
@@ -556,7 +1350,53 @@ body{
             class="status"
             id="statusText">
 
-            ● COMMUNITY ONLINE
+            <span class="status-dot"></span>
+            COMMUNITY ONLINE
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <strong>
+                    LIVE
+                </strong>
+
+                <span>
+                    Status
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <strong>
+                    3
+                </strong>
+
+                <span>
+                    Channels
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <strong>
+                    24/7
+                </strong>
+
+                <span>
+                    Community
+                </span>
+
+            </div>
 
         </div>
 
@@ -577,7 +1417,6 @@ body{
 
             </p>
 
-
             <a
                 class="support-btn"
                 id="supportButton"
@@ -591,13 +1430,11 @@ body{
         </div>
 
 
-        <!-- FOOTER -->
-
         <div
             class="footer"
             id="footerText">
 
-            © 2025 Evolution Creative Ink
+            © 2026 Evolution Creative Ink
             <br>
             Erstellt für MC_Hinterhalt
 
@@ -608,11 +1445,20 @@ body{
 </div>
 
 
+<div
+    class="toast"
+    id="toast">
+
+    Fertig!
+
+</div>
+
+
 <script>
 
-/* ================================
+/* =========================================================
    SETTINGS
-================================ */
+========================================================= */
 
 const settingsBtn =
     document.getElementById("settingsBtn");
@@ -621,109 +1467,131 @@ const settingsMenu =
     document.getElementById("settingsMenu");
 
 
-settingsBtn.addEventListener("click", () => {
+settingsBtn.addEventListener(
+    "click",
+    () => {
 
-    settingsMenu.classList.toggle("active");
+        settingsMenu.classList.toggle(
+            "active"
+        );
 
-});
+        playTone(500,.05);
+
+    }
+);
 
 
-/* ================================
-   SOUNDS
-================================ */
+/* =========================================================
+   AUDIO
+========================================================= */
 
 const audioContext =
-    new (window.AudioContext ||
-    window.webkitAudioContext)();
+    new (
+        window.AudioContext ||
+        window.webkitAudioContext
+    )();
 
-let volume = 0.3;
+let volume =
+    Number(
+        localStorage.getItem("mc_volume") || .3
+    );
+
+let sounds =
+    localStorage.getItem("mc_sounds") !== "false";
 
 
-function playTone(freq, duration){
+function playTone(
+    frequency,
+    duration,
+    type="sine"
+){
 
-    const osc =
+    if(!sounds)
+        return;
+
+    if(
+        audioContext.state === "suspended"
+    ){
+
+        audioContext.resume();
+
+    }
+
+    const oscillator =
         audioContext.createOscillator();
 
     const gain =
         audioContext.createGain();
 
 
-    osc.connect(gain);
+    oscillator.type =
+        type;
 
-    gain.connect(audioContext.destination);
-
-
-    osc.frequency.value = freq;
-
-    osc.type = "square";
+    oscillator.frequency.value =
+        frequency;
 
 
-    gain.gain.value =
-        volume * 0.05;
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
 
 
-    osc.start();
+    gain.gain.setValueAtTime(
+        volume * .045,
+        audioContext.currentTime
+    );
 
-    osc.stop(
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
         audioContext.currentTime + duration
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioContext.currentTime +
+        duration
     );
 
 }
 
 
-/* BUTTON HOVER SOUND */
+/* =========================================================
+   BUTTON SOUNDS
+========================================================= */
 
 document
 .querySelectorAll(".btn")
-.forEach(btn => {
+.forEach(button => {
 
-    btn.addEventListener(
+    button.addEventListener(
         "mouseenter",
-        () => playTone(700,0.03)
+        () => playTone(700,.025)
     );
 
-    btn.addEventListener(
+    button.addEventListener(
         "click",
-        () => playTone(400,0.08)
+        () => playTone(400,.07)
     );
 
 });
 
 
-/* SETTINGS SOUND */
-
-settingsBtn.addEventListener(
-    "mouseenter",
-    () => playTone(800,0.03)
-);
-
-settingsBtn.addEventListener(
-    "click",
-    () => playTone(500,0.05)
-);
-
-
-/* ================================
+/* =========================================================
    VOLUME
-================================ */
+========================================================= */
 
 const volumeSlider =
-    document.getElementById("volumeSlider");
+    document.getElementById(
+        "volumeSlider"
+    );
 
 
-const savedVolume =
-    localStorage.getItem("mc_volume");
-
-
-if(savedVolume !== null){
-
-    volume =
-        parseFloat(savedVolume);
-
-    volumeSlider.value =
-        volume;
-
-}
+volumeSlider.value =
+    volume;
 
 
 volumeSlider.addEventListener(
@@ -731,7 +1599,9 @@ volumeSlider.addEventListener(
     () => {
 
         volume =
-            parseFloat(volumeSlider.value);
+            Number(
+                volumeSlider.value
+            );
 
         localStorage.setItem(
             "mc_volume",
@@ -742,13 +1612,905 @@ volumeSlider.addEventListener(
 );
 
 
-/* ================================
-   LANGUAGE SYSTEM
-================================ */
+/* =========================================================
+   SOUND TOGGLE
+========================================================= */
+
+const soundToggle =
+    document.getElementById(
+        "soundToggle"
+    );
+
+
+soundToggle.checked =
+    sounds;
+
+
+soundToggle.addEventListener(
+    "change",
+    () => {
+
+        sounds =
+            soundToggle.checked;
+
+        localStorage.setItem(
+            "mc_sounds",
+            sounds
+        );
+
+        if(sounds)
+            playTone(750,.08);
+
+    }
+);
+
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+const themes = {
+
+    blue:{
+        accent:"#5865f2",
+        accent2:"#8b5cf6"
+    },
+
+    purple:{
+        accent:"#a855f7",
+        accent2:"#ec4899"
+    },
+
+    red:{
+        accent:"#ef4444",
+        accent2:"#f97316"
+    },
+
+    green:{
+        accent:"#22c55e",
+        accent2:"#06b6d4"
+    }
+
+};
+
+
+const themeSelect =
+    document.getElementById(
+        "themeSelect"
+    );
+
+
+function setTheme(theme){
+
+    const data =
+        themes[theme];
+
+    if(!data)
+        return;
+
+
+    document.documentElement.style
+        .setProperty(
+            "--accent",
+            data.accent
+        );
+
+
+    document.documentElement.style
+        .setProperty(
+            "--accent2",
+            data.accent2
+        );
+
+
+    document.documentElement.style
+        .setProperty(
+            "--accentGlow",
+            data.accent + "70"
+        );
+
+
+    localStorage.setItem(
+        "mc_theme",
+        theme
+    );
+
+}
+
+
+const savedTheme =
+    localStorage.getItem(
+        "mc_theme"
+    ) || "blue";
+
+
+themeSelect.value =
+    savedTheme;
+
+
+setTheme(savedTheme);
+
+
+themeSelect.addEventListener(
+    "change",
+    () => {
+
+        setTheme(
+            themeSelect.value
+        );
+
+        showToast(
+            "Theme geändert ✨"
+        );
+
+        playTone(600,.06);
+
+    }
+);
+
+
+/* =========================================================
+   PERFORMANCE MODE
+========================================================= */
+
+const performanceToggle =
+    document.getElementById(
+        "performanceToggle"
+    );
+
+
+const performance =
+    localStorage.getItem(
+        "mc_performance"
+    ) === "true";
+
+
+performanceToggle.checked =
+    performance;
+
+
+if(performance){
+
+    document.body.classList.add(
+        "performance-mode"
+    );
+
+}
+
+
+performanceToggle.addEventListener(
+    "change",
+    () => {
+
+        const enabled =
+            performanceToggle.checked;
+
+
+        document.body.classList.toggle(
+            "performance-mode",
+            enabled
+        );
+
+
+        localStorage.setItem(
+            "mc_performance",
+            enabled
+        );
+
+
+        showToast(
+            enabled
+            ? "Performance-Modus ⚡"
+            : "Effekte aktiviert ✨"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+function openLink(
+    url,
+    message
+){
+
+    playTone(450,.1);
+
+    showToast(message);
+
+    setTimeout(
+        () => {
+            window.open(
+                url,
+                "_blank"
+            );
+        },
+        220
+    );
+
+}
+
+
+/* =========================================================
+   COPY DISCORD
+========================================================= */
+
+function copyDiscordLink(){
+
+    const link =
+        "https://discord.gg/aEPNQPve5C";
+
+
+    navigator.clipboard
+        .writeText(link)
+        .then(() => {
+
+            playTone(800,.08);
+
+            showToast(
+                "Discord-Link kopiert 📋"
+            );
+
+        })
+        .catch(() => {
+
+            showToast(
+                "Kopieren nicht möglich"
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+const toast =
+    document.getElementById(
+        "toast"
+    );
+
+let toastTimer;
+
+
+function showToast(message){
+
+    toast.textContent =
+        message;
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2200
+        );
+
+}
+
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+const clock =
+    document.getElementById(
+        "clock"
+    );
+
+
+function updateClock(){
+
+    const now =
+        new Date();
+
+
+    const time =
+        now.toLocaleTimeString(
+            "de-DE",
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        );
+
+
+    clock.textContent =
+        "🕒 " + time;
+
+}
+
+
+updateClock();
+
+setInterval(
+    updateClock,
+    1000
+);
+
+
+/* =========================================================
+   PREMIUM PARTICLE SYSTEM
+========================================================= */
+
+const canvas =
+    document.getElementById(
+        "particles"
+    );
+
+const ctx =
+    canvas.getContext(
+        "2d"
+    );
+
+
+let particles = [];
+
+let mouse = {
+    x:null,
+    y:null,
+    active:false
+};
+
+
+/* ---------------------------------------------------------
+   RESIZE
+--------------------------------------------------------- */
+
+function resizeCanvas(){
+
+    const ratio =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+
+    canvas.width =
+        window.innerWidth * ratio;
+
+    canvas.height =
+        window.innerHeight * ratio;
+
+
+    canvas.style.width =
+        window.innerWidth + "px";
+
+    canvas.style.height =
+        window.innerHeight + "px";
+
+
+    ctx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+
+    createParticles();
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+/* ---------------------------------------------------------
+   PARTICLE CLASS
+--------------------------------------------------------- */
+
+class Particle{
+
+    constructor(){
+
+        this.reset(
+            true
+        );
+
+    }
+
+
+    reset(initial=false){
+
+        this.x =
+            Math.random() *
+            window.innerWidth;
+
+
+        this.y =
+            initial
+            ? Math.random() *
+              window.innerHeight
+            : window.innerHeight + 20;
+
+
+        this.radius =
+            Math.random() *
+            1.8 + .35;
+
+
+        this.speedY =
+            Math.random() *
+            .32 + .08;
+
+
+        this.speedX =
+            (Math.random() - .5) *
+            .18;
+
+
+        this.alpha =
+            Math.random() *
+            .55 + .12;
+
+
+        this.twinkle =
+            Math.random() *
+            .02 + .004;
+
+
+        this.phase =
+            Math.random() *
+            Math.PI * 2;
+
+
+        this.depth =
+            Math.random();
+
+
+        this.colorShift =
+            Math.random();
+
+    }
+
+
+    update(){
+
+        this.phase +=
+            this.twinkle;
+
+
+        this.y -=
+            this.speedY;
+
+
+        this.x +=
+            this.speedX +
+            Math.sin(this.phase) * .05;
+
+
+        if(
+            this.y < -20
+        ){
+
+            this.reset();
+
+        }
+
+
+        if(
+            this.x < -20
+        ){
+
+            this.x =
+                window.innerWidth + 20;
+
+        }
+
+
+        if(
+            this.x >
+            window.innerWidth + 20
+        ){
+
+            this.x = -20;
+
+        }
+
+
+        /* Maus-Effekt */
+
+        if(mouse.active){
+
+            const dx =
+                this.x - mouse.x;
+
+            const dy =
+                this.y - mouse.y;
+
+            const distance =
+                Math.sqrt(
+                    dx * dx +
+                    dy * dy
+                );
+
+
+            const radius =
+                130;
+
+
+            if(
+                distance < radius
+            ){
+
+                const force =
+                    (radius - distance)
+                    / radius;
+
+
+                this.x +=
+                    (dx / distance) *
+                    force *
+                    .8;
+
+
+                this.y +=
+                    (dy / distance) *
+                    force *
+                    .8;
+
+            }
+
+        }
+
+    }
+
+
+    draw(){
+
+        const pulse =
+            .75 +
+            Math.sin(this.phase) *
+            .25;
+
+
+        const alpha =
+            this.alpha *
+            pulse;
+
+
+        /* Glow */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.radius * 4,
+            0,
+            Math.PI * 2
+        );
+
+
+        const glow =
+            ctx.createRadialGradient(
+                this.x,
+                this.y,
+                0,
+                this.x,
+                this.y,
+                this.radius * 4
+            );
+
+
+        glow.addColorStop(
+            0,
+            `rgba(150,160,255,${alpha * .25})`
+        );
+
+        glow.addColorStop(
+            1,
+            "rgba(150,160,255,0)"
+        );
+
+
+        ctx.fillStyle =
+            glow;
+
+        ctx.fill();
+
+
+        /* Kern */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.radius,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            `rgba(220,225,255,${alpha})`;
+
+        ctx.fill();
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   CREATE PARTICLES
+--------------------------------------------------------- */
+
+function createParticles(){
+
+    particles = [];
+
+
+    const area =
+        window.innerWidth *
+        window.innerHeight;
+
+
+    let amount =
+        Math.floor(
+            area / 10500
+        );
+
+
+    amount =
+        Math.max(
+            45,
+            Math.min(
+                amount,
+                130
+            )
+        );
+
+
+    if(
+        window.innerWidth < 600
+    ){
+
+        amount =
+            Math.min(
+                amount,
+                55
+            );
+
+    }
+
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        particles.push(
+            new Particle()
+        );
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   CONNECTION LINES
+--------------------------------------------------------- */
+
+function drawConnections(){
+
+    const maxDistance =
+        window.innerWidth < 600
+        ? 90
+        : 125;
+
+
+    for(
+        let i=0;
+        i<particles.length;
+        i++
+    ){
+
+        const p1 =
+            particles[i];
+
+
+        for(
+            let j=i+1;
+            j<particles.length;
+            j++
+        ){
+
+            const p2 =
+                particles[j];
+
+
+            const dx =
+                p1.x - p2.x;
+
+            const dy =
+                p1.y - p2.y;
+
+
+            const distance =
+                Math.sqrt(
+                    dx * dx +
+                    dy * dy
+                );
+
+
+            if(
+                distance < maxDistance
+            ){
+
+                const opacity =
+                    (1 -
+                    distance /
+                    maxDistance) *
+                    .12;
+
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    p1.x,
+                    p1.y
+                );
+
+                ctx.lineTo(
+                    p2.x,
+                    p2.y
+                );
+
+
+                ctx.strokeStyle =
+                    `rgba(150,160,255,${opacity})`;
+
+                ctx.lineWidth =
+                    .6;
+
+                ctx.stroke();
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   MOUSE
+--------------------------------------------------------- */
+
+window.addEventListener(
+    "mousemove",
+    event => {
+
+        mouse.x =
+            event.clientX;
+
+        mouse.y =
+            event.clientY;
+
+        mouse.active =
+            true;
+
+    }
+);
+
+
+window.addEventListener(
+    "mouseleave",
+    () => {
+
+        mouse.active =
+            false;
+
+    }
+);
+
+
+/* ---------------------------------------------------------
+   PARTICLE ANIMATION
+--------------------------------------------------------- */
+
+function animateParticles(){
+
+    requestAnimationFrame(
+        animateParticles
+    );
+
+
+    if(
+        document.body.classList
+            .contains(
+                "performance-mode"
+            )
+    ){
+
+        ctx.clearRect(
+            0,
+            0,
+            window.innerWidth,
+            window.innerHeight
+        );
+
+        return;
+
+    }
+
+
+    ctx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+
+    particles.forEach(
+        particle => {
+
+            particle.update();
+
+        }
+    );
+
+
+    drawConnections();
+
+
+    particles.forEach(
+        particle => {
+
+            particle.draw();
+
+        }
+    );
+
+}
+
+
+/* Start */
+
+resizeCanvas();
+
+animateParticles();
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
 
 const translations = {
 
-    de: {
+    de:{
 
         subtitle:
             "OFFICIAL COMMUNITY",
@@ -772,7 +2534,7 @@ const translations = {
             "💬 Offizieller Discord",
 
         status:
-            "● COMMUNITY ONLINE",
+            "COMMUNITY ONLINE",
 
         supportTitle:
             "Hilfe benötigt?",
@@ -784,7 +2546,7 @@ const translations = {
             "Discord-Support kontaktieren",
 
         footer:
-            "© 2025 Evolution Creative Ink<br>Erstellt für MC_Hinterhalt",
+            "© 2026 Evolution Creative Ink<br>Erstellt für MC_Hinterhalt",
 
         settings:
             "⚙ Einstellungen",
@@ -798,7 +2560,7 @@ const translations = {
     },
 
 
-    en: {
+    en:{
 
         subtitle:
             "OFFICIAL COMMUNITY",
@@ -822,7 +2584,7 @@ const translations = {
             "💬 Official Discord",
 
         status:
-            "● COMMUNITY ONLINE",
+            "COMMUNITY ONLINE",
 
         supportTitle:
             "Need Help?",
@@ -834,7 +2596,7 @@ const translations = {
             "Contact Discord Support",
 
         footer:
-            "© 2025 Evolution Creative Ink<br>Created for MC_Hinterhalt",
+            "© 2026 Evolution Creative Ink<br>Created for MC_Hinterhalt",
 
         settings:
             "⚙ Settings",
@@ -850,89 +2612,103 @@ const translations = {
 };
 
 
-/* ================================
-   CHANGE LANGUAGE
-================================ */
-
 function setLanguage(lang){
 
     const t =
         translations[lang];
 
-
-    document
-        .getElementById("subtitle")
-        .innerHTML = t.subtitle;
+    if(!t)
+        return;
 
 
-    document
-        .getElementById("creatorTitle")
-        .innerHTML = t.creator;
+    document.getElementById(
+        "subtitle"
+    ).innerHTML =
+        t.subtitle;
 
 
-    document
-        .getElementById("developerTitle")
-        .innerHTML = t.developer;
+    document.getElementById(
+        "creatorTitle"
+    ).innerHTML =
+        t.creator;
 
 
-    document
-        .getElementById("btnMysterys")
-        .innerHTML = t.btnMysterys;
+    document.getElementById(
+        "developerTitle"
+    ).innerHTML =
+        t.developer;
 
 
-    document
-        .getElementById("btnMain")
-        .innerHTML = t.btnMain;
+    document.getElementById(
+        "btnMysterys"
+    ).innerHTML =
+        t.btnMysterys;
 
 
-    document
-        .getElementById("btnGaming")
-        .innerHTML = t.btnGaming;
+    document.getElementById(
+        "btnMain"
+    ).innerHTML =
+        t.btnMain;
 
 
-    document
-        .getElementById("btnDiscord")
-        .innerHTML = t.btnDiscord;
+    document.getElementById(
+        "btnGaming"
+    ).innerHTML =
+        t.btnGaming;
 
 
-    document
-        .getElementById("statusText")
-        .innerHTML = t.status;
+    document.getElementById(
+        "btnDiscord"
+    ).innerHTML =
+        t.btnDiscord;
 
 
-    document
-        .getElementById("supportTitle")
-        .innerHTML = t.supportTitle;
+    document.getElementById(
+        "statusText"
+    ).innerHTML =
+        `<span class="status-dot"></span>${t.status}`;
 
 
-    document
-        .getElementById("supportText")
-        .innerHTML = t.supportText;
+    document.getElementById(
+        "supportTitle"
+    ).innerHTML =
+        t.supportTitle;
 
 
-    document
-        .getElementById("supportButton")
-        .innerHTML = t.supportButton;
+    document.getElementById(
+        "supportText"
+    ).innerHTML =
+        t.supportText;
 
 
-    document
-        .getElementById("footerText")
-        .innerHTML = t.footer;
+    document.getElementById(
+        "supportButton"
+    ).innerHTML =
+        t.supportButton;
 
 
-    document
-        .getElementById("settingsTitle")
-        .innerHTML = t.settings;
+    document.getElementById(
+        "footerText"
+    ).innerHTML =
+        t.footer;
 
 
-    document
-        .getElementById("languageLabel")
-        .innerHTML = t.language;
+    document.getElementById(
+        "settingsTitle"
+    ).innerHTML =
+        t.settings;
 
 
-    document
-        .getElementById("volumeLabel")
-        .innerHTML = t.volume;
+    document.getElementById(
+        "languageLabel"
+    ).innerHTML =
+        t.language;
+
+
+    document.getElementById(
+        "volumeLabel"
+    ).innerHTML =
+        t.volume;
 
 
     document.documentElement.lang =
@@ -947,9 +2723,9 @@ function setLanguage(lang){
 }
 
 
-/* ================================
+/* =========================================================
    LANGUAGE SELECT
-================================ */
+========================================================= */
 
 const languageSelect =
     document.getElementById(
@@ -965,39 +2741,106 @@ languageSelect.addEventListener(
             languageSelect.value
         );
 
+        showToast(
+            languageSelect.value === "de"
+            ? "Sprache: Deutsch 🇩🇪"
+            : "Language: English 🇬🇧"
+        );
+
     }
 );
 
 
-/* ================================
-   LOAD SAVED LANGUAGE
-================================ */
-
 const savedLanguage =
     localStorage.getItem(
         "mc_language"
-    );
+    ) || "de";
 
 
-if(savedLanguage){
+languageSelect.value =
+    savedLanguage;
 
-    languageSelect.value =
-        savedLanguage;
 
-    setLanguage(
-        savedLanguage
-    );
+setLanguage(
+    savedLanguage
+);
 
-}else{
 
-    setLanguage("de");
+/* =========================================================
+   CLOSE SETTINGS
+========================================================= */
 
-}
+document.addEventListener(
+    "click",
+    event => {
+
+        if(
+            !settingsMenu.contains(
+                event.target
+            ) &&
+            !settingsBtn.contains(
+                event.target
+            )
+        ){
+
+            settingsMenu.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key.toLowerCase()
+            === "escape"
+        ){
+
+            settingsMenu.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        if(
+            event.key.toLowerCase()
+            === "m"
+        ){
+
+            sounds =
+                !sounds;
+
+            soundToggle.checked =
+                sounds;
+
+            localStorage.setItem(
+                "mc_sounds",
+                sounds
+            );
+
+            showToast(
+                sounds
+                ? "Sounds aktiviert 🔊"
+                : "Sounds deaktiviert 🔇"
+            );
+
+        }
+
+    }
+);
 
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
